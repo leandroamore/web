@@ -1,0 +1,50 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+
+}
+@Scripts.Render("~/bundles/jquery")
+<div class="jumbotron">
+    <h1>Data Management</h1>
+    <p class="lead">
+        Use this portal to manage and view user data. To view data, select the data category from the top menu.
+    </p>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Product Listings</h2>
+        <p>
+            Here you can easily find product listing data. Search based on product categories to find listings of products in the database
+        </p>
+    </div>
+    <div class="col-md-4">
+        <h2>Customer Data</h2>
+        <p>
+            Here you can easily find Customer listing data. Search based on city to find listings of customers in the database
+        </p>
+    </div>
+    <div class="col-md-4">
+        <h2>Employee Data</h2>
+        <p>
+            Here you can easily find employee data. Search based on Gender to find listings of employees in the database
+        </p>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-md-4">
+        <p>
+            @Html.ActionLink("View Product Data", "ViewProducts", null, new { @class = "btn btn-default" })
+        </p>
+    </div>
+    <div class="col-md-4">
+        <p>
+            @Html.ActionLink("View Customer Data", "ViewCustomers", null, new { @class = "btn btn-default" })
+        </p>
+    </div>
+    <div class="col-md-4">
+        <p>
+            @Html.ActionLink("View Employee Data", "ViewEmployees", null, new { @class = "btn btn-default" })
+        </p>
+    </div>
+</div>

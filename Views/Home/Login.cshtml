@@ -1,0 +1,23 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Scripts.Render("~/bundles/jquery")
+
+
+@using (Html.BeginForm("Login", "Home", FormMethod.Get))
+{
+    <div class="jumbotron text-center">
+        <h1>Data Management Login</h1>
+        <p class="lead">
+            <div class="text-center">
+                <div>
+                    <br />
+                    <div>
+                        @Html.TextBox("DataKey", "", new { @class = "input-xxlarge" })
+                    </div>
+                    <input id="Log in" type="submit" value="Log in" style="width: 230px" />
+                </div>
+            </div>
+        </p>
+    </div>
+}

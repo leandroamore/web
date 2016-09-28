@@ -1,0 +1,106 @@
+﻿@model IEnumerable<ContosoDataLab.Data.Models.SalesOrderHeader>
+
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ContosoDataLab.Data.Models.SalesOrderHeader salesOrderHeader = new ContosoDataLab.Data.Models.SalesOrderHeader();
+    var grid = new WebGrid(Model, canPage: true, rowsPerPage: 20, ajaxUpdateContainerId: "gridContent");
+    grid.Pager(WebGridPagerModes.NextPrevious);
+}
+
+
+@Scripts.Render("~/bundles/jquery")
+<style type="text/css">
+    .rowStyle {
+        width: auto;
+        padding: 5px 5px 5px 5px;
+        margin: 5px 5px 5px 5px;
+    }
+
+    .webGrid {
+        margin: 4px;
+        border-collapse: collapse;
+        width: 500px;
+        background-color: #FCFCFC;
+    }
+
+    .header {
+        background-color: #C1D4E6;
+        font-weight: bold;
+        color: #FFF;
+    }
+
+    .webGrid th, .webGrid td {
+        border: 1px solid #C0C0C0;
+        padding: 5px;
+    }
+
+    .alt {
+        background-color: #E4E9F5;
+        color: #000;
+    }
+
+    .gridHead a:hover {
+        text-decoration: underline;
+    }
+
+    .description {
+        width: auto;
+    }
+</style>
+
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+
+<div class="page-header">
+</div>
+@using (Html.BeginForm("ViewCustomers", "Home", FormMethod.Get))
+{
+    <div class="row">
+        <div class="col-lg-3">
+            Filter by City:
+            @Html.DropDownList("City", new SelectList(ViewBag.Cities))
+        </div>
+        <div class="col-lg-1 ">
+            <input id="Search" type="submit" value="Search" />
+        </div>
+    </div>
+    <br />
+    <br />
+
+    <div class="row">
+        <div class="col-md-6">
+            <div id="gridContent" class="dataGrid">
+                @grid.GetHtml(tableStyle: "webGrid",
+                headerStyle: "header",
+                alternatingRowStyle: "alt",
+                rowStyle: "rowStyle",
+                columns: grid.Columns(
+
+                grid.Column("Customer.AccountNumber", "Account Number"),
+                grid.Column("Customer.Person.FirstName", "First Name"),
+                grid.Column("Customer.Person.LastName", "Last Name", style: "description"),
+                grid.Column("Address.City", "City"),
+                grid.Column("Customer.SalesTerritory.Name", "Sales Territory")
+
+
+         ))
+
+            </div>
+        </div>
+        @*<div class="col-md-4">
+                @if (grid.HasSelection)
+                {
+                    customer = (ContosoDataLab.Data.Models.Customer)grid.Rows[grid.SelectedIndex].Value;
+                    <b>Id</b> @customer.AccountNumber<br />
+                    <b>First Name</b>  @customer.Person.FirstName<br />
+                    <b>Last Name</b> @customer.Person.LastName<br />
+                    <b>SalesTerritory</b> @customer.SalesTerritory.Name<br />
+                    <b>Store Name</b> @customer.Store.Name<br />
+                }
+
+            </div>*@
+
+    </div>
+
+}

@@ -1,0 +1,95 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model IEnumerable<ContosoDataLab.Data.Models.Product>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var grid = new WebGrid(Model, canPage: true, rowsPerPage: 20, ajaxUpdateContainerId: "gridContent");
+    grid.Pager(WebGridPagerModes.NextPrevious);
+}
+
+@Scripts.Render("~/bundles/jquery")
+
+<style type="text/css">
+    .rowStyle {
+        width: auto;
+        padding: 5px 5px 5px 5px;
+        margin: 5px 5px 5px 5px;
+    }
+
+    .webGrid {
+        margin: 4px;
+        border-collapse: collapse;
+        width: 500px;
+        background-color: #FCFCFC;
+    }
+
+    .header {
+        background-color: #C1D4E6;
+        font-weight: bold;
+        color: #494949;
+    }
+
+    .webGrid th, .webGrid td {
+        border: 1px solid #C0C0C0;
+        padding: 5px;
+    }
+
+    .alt {
+        background-color: #E4E9F5;
+        color: #000;
+    }
+
+    .gridHead a:hover {
+        text-decoration: underline;
+    }
+
+    .description {
+        width: auto;
+    }
+</style>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+
+<div class="page-header">
+</div>
+@using (Html.BeginForm("ViewProducts", "Home", FormMethod.Get))
+{
+    <div class="row">
+        <div class="col-lg-3">
+            Filter by Category:
+            @Html.DropDownList("Category", new SelectList(ViewBag.Categories))
+        </div>
+        <div class="col-lg-1 ">
+            <input id="Search" type="submit" value="Search" />
+        </div>
+    </div>
+    <br />
+    <br />
+
+    <div class="row">
+        <div class="col-md-6">
+            <div id="gridContent" class="dataGrid">
+                @grid.GetHtml(tableStyle: "webGrid",
+                headerStyle: "header",
+                alternatingRowStyle: "alt",
+         rowStyle: "rowStyle",
+                columns: grid.Columns(
+
+         grid.Column("ProductNumber", header: "Product Number", format: @<text>@(item.ProductNumber == null ? "None" : item.ProductNumber)</text>),
+                grid.Column("Name", "Product Name"),
+                grid.Column("ListPrice", "List Price"),
+                grid.Column("DaysToManufacture", "Manufacturing Time"),
+                grid.Column("SellStartDate", "Sell Start Date"),
+
+
+                grid.Column("ProductSubcategory.Name", header: "Category Name",canSort: false,  format: @<text>@(item.ProductSubcategory == null ? "None" : item.ProductSubcategory.Name)</text>))
+                                                 )
+
+            </div>
+        </div>
+    </div>
+
+}

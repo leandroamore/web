@@ -1,0 +1,97 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model IEnumerable<ContosoDataLab.Data.Models.Employee>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var grid = new WebGrid(Model, canPage: true, rowsPerPage: 20, ajaxUpdateContainerId: "gridContent");
+    grid.Pager(WebGridPagerModes.NextPrevious);
+}
+
+@Scripts.Render("~/bundles/jquery")
+
+<style type="text/css">
+    .rowStyle {
+        width: 300px;
+        padding: 5px 5px 5px 5px;
+        margin: 5px 5px 5px 5px;
+        
+    }
+
+    .webGrid {
+        margin: 4px;
+        border-collapse: collapse;
+        width: 500px;
+        background-color: #FCFCFC;
+    }
+
+    .header {
+        background-color: #C1D4E6;
+        font-weight: bold;
+        color: #FFF;
+    }
+
+    .webGrid th, .webGrid td {
+        border: 1px solid #C0C0C0;
+        padding: 5px;
+    }
+
+    .alt {
+        background-color: #E4E9F5;
+        color: #000;
+    }
+
+    .gridHead a:hover {
+        text-decoration: underline;
+    }
+
+    .description {
+        width: auto;
+    }
+</style>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+
+<div class="page-header">
+</div>
+@using (Html.BeginForm("ViewEmployees", "Home", FormMethod.Get))
+{
+    <div class="row">
+        <div class="col-lg-2">
+            Filter by Gender:
+            @Html.DropDownList("Gender", new SelectList(ViewBag.Categories))
+        </div>
+        <div class="col-lg-1 ">
+            <input id="Search" type="submit" value="Search" />
+        </div>
+    </div>
+    <br />
+    <br />
+
+    <div class="row">
+        <div class="col-md-6">
+            <div id="gridContent" class="dataGrid">
+                @grid.GetHtml(tableStyle: "webGrid",
+                headerStyle: "header",
+                alternatingRowStyle: "alt",
+                columns: grid.Columns(
+
+  grid.Column("Gender", "Gender"),
+         grid.Column("Person.FirstName", "First Name"),
+         grid.Column("Person.LastName", "Last Name"),
+         grid.Column("NationalIDNumber", "National ID Number"),
+         grid.Column("JobTitle", "Job Title"),
+         grid.Column("MaritalStatus", "Marital Status"),
+         grid.Column("HireDate", "Hire Date"),
+         grid.Column("BirthDate", "Birth Date"),
+
+         grid.Column("HireDate", "Hire Date"),
+         grid.Column("VacationHours", "Vacation Hours")
+))
+
+            </div>
+        </div>
+    </div>
+
+}
